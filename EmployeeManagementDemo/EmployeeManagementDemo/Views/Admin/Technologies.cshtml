@@ -1,0 +1,86 @@
+﻿@model EmployeeManagementDemo.Models.TechnologyManagementModel
+
+@{
+    ViewBag.Title = "Technologies";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Employee Management", "Index", "Admin", null, new { @class = "btn btn-light active" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Project Mapping", "Index", "Project", null, new { @class = "btn btn-default" })
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr />
+<div>
+    @Html.HiddenFor(model => model.employee.EmployeeID)
+    <h4>@Html.DisplayFor(model => model.employee.Employee_FirstName)</h4>
+    <hr />
+    <div class="row">
+        <div class="column">
+            <table class="table">
+                <tr>
+                    <th colspan="2" scope="colgroup" align="center">Known</th>
+                </tr>
+                <tr>
+                    <th>Technology</th>
+                    <th>Action</th>
+                </tr>
+
+                @if (Model.techKnown != null)
+                {
+                    foreach (var item in Model.techKnown)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Remove", "RemoveSkill", "Admin", new { id = Model.employee.EmployeeID, techId = item.TechnologyID }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="column">
+            <table class="table">
+                <tr>
+                    <th colspan="2" scope="colgroup" align="center">UnKnown</th>
+                </tr>
+                <tr>
+                    <th>Technology</th>
+                    <th>Action</th>
+                </tr>
+                @if (Model.techUnKnown != null)
+                {
+                    foreach (var item in Model.techUnKnown)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Add", "AddSkill", "Admin", new { id = Model.employee.EmployeeID, techId = item.TechnologyID}, new { @class = "btn btn-primary" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<hr />
+<p>
+    @Html.ActionLink("Back to List", "Index", "Project", new { @class = "btn btn-secondary" })
+</p>
+

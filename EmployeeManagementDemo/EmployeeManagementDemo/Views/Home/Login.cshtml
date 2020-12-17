@@ -1,0 +1,47 @@
+﻿@model EmployeeManagementDemo.Models.UserModel
+@{
+    ViewBag.Title = "Login";
+}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Login", "Login", "Home")
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Register", "Register", "Home")
+            </li>
+        </ul>
+    </div>
+</nav>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Login</h3>
+        </div>
+        <div class="card-body">
+            @Html.Label(TempData["AdminCreated"] != null ? (string)TempData["AdminCreated"] : string.Empty, new { @class = "text-info" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            @Html.Label(ViewBag.InvalidUser != null ? (string)ViewBag.InvalidUser : string.Empty, new { @class = "text-danger" })
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary rounded-0">Login</button>
+            </div>
+        </div>
+    </div>
+}

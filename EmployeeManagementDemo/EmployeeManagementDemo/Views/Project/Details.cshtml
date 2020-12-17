@@ -1,0 +1,40 @@
+﻿@model EmployeeManagementDemo.Models.ProjectDetailsTable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Employee Management", "Index", "Admin", null, new { @class = "btn btn-default" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Project Mapping", "Index", "Project", null, new { @class = "btn btn-light active" })
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", "Project", new { id = Model.ProjectID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", "Project", new { @class = "btn btn-secondary" })
+</p>

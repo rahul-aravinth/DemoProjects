@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ITCompanyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ITCompanyDB.dbo.AdminCredentialsTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AdminCredentialsTable">
+    <Key>
+      <PropertyRef Name="Admin_Name" />
+      <PropertyRef Name="Admin_Password" />
+    </Key>
+    <Property Name="Admin_Name" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Admin_Password" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeDetailsTable">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Employee_LastName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Employee_Age" Type="int" Nullable="false" />
+    <Property Name="Employee_Gender" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Employee_Address" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Employee_Phone" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Employee_State" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Employee_Designation" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ITCompanyDB.dbo.EmployeeProjectMapping' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EmployeeProjectMapping">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ITCompanyDB.dbo.EmployeeTechnologyMapping' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EmployeeTechnologyMapping">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="TechnologyID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="TechnologyID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectDetailsTable">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TechnologyDetailsTable">
+    <Key>
+      <PropertyRef Name="TechnologyID" />
+    </Key>
+    <Property Name="TechnologyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EmployeeProjectMapping_EmployeeDetailsTable">
+    <End Role="EmployeeDetailsTable" Type="Self.EmployeeDetailsTable" Multiplicity="1" />
+    <End Role="EmployeeProjectMapping" Type="Self.EmployeeProjectMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetailsTable">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="EmployeeProjectMapping">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeProjectMapping_ProjectDetailsTable">
+    <End Role="ProjectDetailsTable" Type="Self.ProjectDetailsTable" Multiplicity="1" />
+    <End Role="EmployeeProjectMapping" Type="Self.EmployeeProjectMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectDetailsTable">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="EmployeeProjectMapping">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeTechnologyMapping_EmployeeDetailsTable">
+    <End Role="EmployeeDetailsTable" Type="Self.EmployeeDetailsTable" Multiplicity="1" />
+    <End Role="EmployeeTechnologyMapping" Type="Self.EmployeeTechnologyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetailsTable">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="EmployeeTechnologyMapping">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeTechnologyMapping_TechnologyDetailsTable">
+    <End Role="TechnologyDetailsTable" Type="Self.TechnologyDetailsTable" Multiplicity="1" />
+    <End Role="EmployeeTechnologyMapping" Type="Self.EmployeeTechnologyMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TechnologyDetailsTable">
+        <PropertyRef Name="TechnologyID" />
+      </Principal>
+      <Dependent Role="EmployeeTechnologyMapping">
+        <PropertyRef Name="TechnologyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ITCompanyDBModelStoreContainer">
+    <EntitySet Name="EmployeeDetailsTable" EntityType="Self.EmployeeDetailsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectDetailsTable" EntityType="Self.ProjectDetailsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TechnologyDetailsTable" EntityType="Self.TechnologyDetailsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminCredentialsTable" EntityType="Self.AdminCredentialsTable" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AdminCredentialsTable].[Admin_Name] AS [Admin_Name], 
+    [AdminCredentialsTable].[Admin_Password] AS [Admin_Password]
+    FROM [dbo].[AdminCredentialsTable] AS [AdminCredentialsTable]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="EmployeeProjectMapping" EntityType="Self.EmployeeProjectMapping" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EmployeeProjectMapping].[EmployeeID] AS [EmployeeID], 
+    [EmployeeProjectMapping].[ProjectID] AS [ProjectID]
+    FROM [dbo].[EmployeeProjectMapping] AS [EmployeeProjectMapping]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="EmployeeTechnologyMapping" EntityType="Self.EmployeeTechnologyMapping" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EmployeeTechnologyMapping].[EmployeeID] AS [EmployeeID], 
+    [EmployeeTechnologyMapping].[TechnologyID] AS [TechnologyID]
+    FROM [dbo].[EmployeeTechnologyMapping] AS [EmployeeTechnologyMapping]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_EmployeeProjectMapping_EmployeeDetailsTable" Association="Self.FK_EmployeeProjectMapping_EmployeeDetailsTable">
+      <End Role="EmployeeDetailsTable" EntitySet="EmployeeDetailsTable" />
+      <End Role="EmployeeProjectMapping" EntitySet="EmployeeProjectMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeProjectMapping_ProjectDetailsTable" Association="Self.FK_EmployeeProjectMapping_ProjectDetailsTable">
+      <End Role="ProjectDetailsTable" EntitySet="ProjectDetailsTable" />
+      <End Role="EmployeeProjectMapping" EntitySet="EmployeeProjectMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeTechnologyMapping_EmployeeDetailsTable" Association="Self.FK_EmployeeTechnologyMapping_EmployeeDetailsTable">
+      <End Role="EmployeeDetailsTable" EntitySet="EmployeeDetailsTable" />
+      <End Role="EmployeeTechnologyMapping" EntitySet="EmployeeTechnologyMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeTechnologyMapping_TechnologyDetailsTable" Association="Self.FK_EmployeeTechnologyMapping_TechnologyDetailsTable">
+      <End Role="TechnologyDetailsTable" EntitySet="TechnologyDetailsTable" />
+      <End Role="EmployeeTechnologyMapping" EntitySet="EmployeeTechnologyMapping" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

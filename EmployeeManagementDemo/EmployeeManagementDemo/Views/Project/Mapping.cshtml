@@ -1,0 +1,84 @@
+﻿@model EmployeeManagementDemo.Models.ProjectMappingModel
+@{
+    ViewBag.Title = "Mapping";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Employee Management", "Index", "Admin", null, new { @class = "btn btn-default" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Project Mapping", "Index", "Project", null, new { @class = "btn btn-light active" })
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr />
+<div>
+    @Html.HiddenFor(model => model.Project.ProjectID)
+    <h4>@Html.DisplayFor(model => model.Project.Name)</h4>
+    <hr />
+    <div class="row">
+        <div class="column">
+            <table class="table">
+                <tr>
+                    <th colspan="2" scope="colgroup" align="center">In Project</th>
+                </tr>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Action</th>
+                </tr>
+
+                @if (Model.ProjectEmployees != null)
+                {
+                    foreach (var item in Model.ProjectEmployees)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Employee_FirstName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Remove", "UnMapProject", "Project", new { id = item.EmployeeID, pId = Model.Project.ProjectID }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="column">
+            <table class="table">
+                <tr>
+                    <th colspan="2" scope="colgroup" align="center">Not In Project</th>
+                </tr>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Action</th>
+                </tr>
+                @if (Model.NonProjectEmployees != null)
+                {
+                    foreach (var item in Model.NonProjectEmployees)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Employee_FirstName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Add", "MapProject", "Project", new { id = item.EmployeeID, pId = Model.Project.ProjectID }, new { @class = "btn btn-primary" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<hr />
+<p>
+    @Html.ActionLink("Back to List", "Index", "Project", new { @class = "btn btn-secondary" })
+</p>

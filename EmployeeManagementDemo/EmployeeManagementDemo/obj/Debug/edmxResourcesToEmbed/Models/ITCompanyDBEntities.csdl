@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ITCompanyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EmployeeDetailsTable">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Employee_FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_Age" Type="Int32" Nullable="false" />
+    <Property Name="Employee_Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Employee_Designation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ProjectDetailsTables" Relationship="Self.EmployeeProjectMapping" FromRole="EmployeeDetailsTable" ToRole="ProjectDetailsTable" />
+    <NavigationProperty Name="TechnologyDetailsTables" Relationship="Self.EmployeeTechnologyMapping" FromRole="EmployeeDetailsTable" ToRole="TechnologyDetailsTable" />
+  </EntityType>
+  <EntityType Name="ProjectDetailsTable">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmployeeDetailsTables" Relationship="Self.EmployeeProjectMapping" FromRole="ProjectDetailsTable" ToRole="EmployeeDetailsTable" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TechnologyDetailsTable">
+    <Key>
+      <PropertyRef Name="TechnologyID" />
+    </Key>
+    <Property Name="TechnologyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmployeeDetailsTables" Relationship="Self.EmployeeTechnologyMapping" FromRole="TechnologyDetailsTable" ToRole="EmployeeDetailsTable" />
+  </EntityType>
+  <EntityType Name="AdminCredentialsTable">
+    <Key>
+      <PropertyRef Name="Admin_Name" />
+      <PropertyRef Name="Admin_Password" />
+    </Key>
+    <Property Name="Admin_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Admin_Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="EmployeeProjectMapping">
+    <End Role="EmployeeDetailsTable" Type="Self.EmployeeDetailsTable" Multiplicity="*" />
+    <End Role="ProjectDetailsTable" Type="Self.ProjectDetailsTable" Multiplicity="*" />
+  </Association>
+  <Association Name="EmployeeTechnologyMapping">
+    <End Role="EmployeeDetailsTable" Type="Self.EmployeeDetailsTable" Multiplicity="*" />
+    <End Role="TechnologyDetailsTable" Type="Self.TechnologyDetailsTable" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="ITCompanyDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EmployeeDetailsTables" EntityType="Self.EmployeeDetailsTable" />
+    <EntitySet Name="ProjectDetailsTables" EntityType="Self.ProjectDetailsTable" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TechnologyDetailsTables" EntityType="Self.TechnologyDetailsTable" />
+    <EntitySet Name="AdminCredentialsTables" EntityType="Self.AdminCredentialsTable" />
+    <AssociationSet Name="EmployeeProjectMapping" Association="Self.EmployeeProjectMapping">
+      <End Role="EmployeeDetailsTable" EntitySet="EmployeeDetailsTables" />
+      <End Role="ProjectDetailsTable" EntitySet="ProjectDetailsTables" />
+    </AssociationSet>
+    <AssociationSet Name="EmployeeTechnologyMapping" Association="Self.EmployeeTechnologyMapping">
+      <End Role="EmployeeDetailsTable" EntitySet="EmployeeDetailsTables" />
+      <End Role="TechnologyDetailsTable" EntitySet="TechnologyDetailsTables" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ITCompanyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EmployeeDetailsTable">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Employee_LastName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Employee_Age" Type="int" Nullable="false" />
+    <Property Name="Employee_Gender" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Employee_Address" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Employee_Phone" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Employee_State" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Employee_Designation" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeMappingTable">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Employee_Designation" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Employee_Technologies" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Employee_Project" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_EmployeeMappingTable_EmployeeDetailsTable">
+    <End Role="EmployeeDetailsTable" Type="Self.EmployeeDetailsTable" Multiplicity="1" />
+    <End Role="EmployeeMappingTable" Type="Self.EmployeeMappingTable" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetailsTable">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="EmployeeMappingTable">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ITCompanyDBModelStoreContainer">
+    <EntitySet Name="EmployeeDetailsTable" EntityType="Self.EmployeeDetailsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeMappingTable" EntityType="Self.EmployeeMappingTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EmployeeMappingTable_EmployeeDetailsTable" Association="Self.FK_EmployeeMappingTable_EmployeeDetailsTable">
+      <End Role="EmployeeDetailsTable" EntitySet="EmployeeDetailsTable" />
+      <End Role="EmployeeMappingTable" EntitySet="EmployeeMappingTable" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

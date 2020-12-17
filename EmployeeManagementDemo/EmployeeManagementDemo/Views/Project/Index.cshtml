@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EmployeeManagementDemo.Models.ProjectDetailsTable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Employee Management", "Index", "Admin", null, new { @class = "btn btn-default" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Project Mapping", "Index", "Project", null, new { @class = "btn btn-light active" })
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr />
+<p>
+    @Html.ActionLink("Create New", "Create", "Project", new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>Mapping</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Mapping", "Mapping", "Project", new { id = item.ProjectID }, new { @class = "btn btn-info" })
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Project", new { id=item.ProjectID }, new { @class = "btn btn-info" }) |
+            @Html.ActionLink("Details", "Details", "Project", new { id=item.ProjectID }, new { @class = "btn btn-secondary" }) |
+            @Html.ActionLink("Delete", "Delete", "Project", new { id=item.ProjectID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

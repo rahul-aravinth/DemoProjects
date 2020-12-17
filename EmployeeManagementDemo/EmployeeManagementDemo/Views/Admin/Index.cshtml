@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EmployeeManagementDemo.Models.EmployeeDetailsTable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IT Company</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Employee Management", "Index", "Admin", null, new { @class = "btn btn-light active" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Project Mapping", "Index", "Project", null, new { @class = "btn btn-default" })
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr />
+<p>
+    @Html.ActionLink("Add Employee", "Create", "Admin", new { @class = "btn btn-primary"})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Designation)
+        </th>
+        <th>Technologies</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_State)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee_Designation)
+        </td>
+        <td>
+            @Html.ActionLink("Technologies", "Technologies", "Admin", new { id = item.EmployeeID }, new { @class = "btn btn-info" })
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Admin", new { id = item.EmployeeID }, new { @class = "btn btn-info"}) | 
+            @Html.ActionLink("Details", "Details", "Admin", new { id=item.EmployeeID }, new { @class = "btn btn-secondary" }) | 
+            @Html.ActionLink("Delete", "Delete", "Admin", new { id=item.EmployeeID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
